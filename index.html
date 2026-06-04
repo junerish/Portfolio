@@ -3,533 +3,369 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portfolio | 기획자</title>
+<title>Table Component</title>
 <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 /* ── tokens ── */
 :root{
-  --color-primitive-primary-100:#DDE4FC;--color-primitive-primary-200:#BBC9F9;
-  --color-primitive-primary-500:#5578F0;--color-primitive-primary-600:#4D6CD8;--color-primitive-primary-400:#7793F3;
+  --color-primitive-primary-500:#5578F0;--color-primitive-primary-600:#4D6CD8;--color-primitive-primary-100:#DDE4FC;
   --color-primitive-success-100:#D4F4E2;--color-primitive-success-500:#28C76F;--color-primitive-success-600:#24B364;
   --color-primitive-warning-100:#FFECD9;--color-primitive-warning-500:#FF9F43;
-  --color-primitive-info-100:#CCF1F6;--color-primitive-info-500:#00BAD1;
   --color-primitive-error-100:#FFDBDC;--color-primitive-error-500:#FF4C51;
-  --color-primitive-gray-100:#EAEAEC;--color-primitive-gray-200:#D5D4D8;--color-primitive-gray-800:#585164;--color-primitive-gray-900:#433C50;
-  --color-primitive-opacity-primary-8:#5578F014;--color-primitive-opacity-primary-16:#5578F029;--color-primitive-opacity-primary-24:#5578F03D;
-  --color-primitive-opacity-gray-8:#2E263D14;--color-primitive-opacity-gray-16:#2E263D29;
-  --color-color-palette-primary-main:#5578F0;--color-color-palette-primary-dark:#4D6CD8;--color-color-palette-primary-light:#7793F3;
+  --color-primitive-info-100:#CCF1F6;--color-primitive-info-500:#00BAD1;
+  --color-primitive-gray-100:#EAEAEC;--color-primitive-gray-200:#D5D4D8;
+  --color-primitive-opacity-primary-8:#5578F014;--color-primitive-opacity-primary-16:#5578F029;
+  --color-color-palette-primary-main:#5578F0;--color-color-palette-primary-dark:#4D6CD8;
   --color-color-palette-primary-opacity-lighter:#5578F014;--color-color-palette-primary-opacity-light:#5578F029;
   --color-color-palette-success-main:#28C76F;--color-color-palette-success-dark:#24B364;
   --color-color-palette-warning-main:#FF9F43;--color-color-palette-error-main:#FF4C51;--color-color-palette-info-main:#00BAD1;
-  --color-theme-text-primary:#2F2B3DE6;--color-theme-text-secondary:#2F2B3DB3;--color-theme-text-subtitle:#2F2B3D8C;--color-theme-text-disabled:#2F2B3D66;
-  --color-theme-action-hover:#2F2B3D0F;--color-theme-action-selected:#2F2B3D14;--color-theme-divider:#2F2B3D1F;
-  --color-theme-outline-border:#2F2B3D3D;--color-theme-input-border:#2F2B3D38;--color-theme-chip-background:#2F2B3D14;
-  --color-misc-body-bg:#F7F7F7;--color-misc-paper:#FFFFFF;--color-misc-grey-light:#FAFAFA;
+  --color-theme-text-primary:#2F2B3DE6;--color-theme-text-secondary:#2F2B3DB3;
+  --color-theme-text-subtitle:#2F2B3D8C;--color-theme-text-disabled:#2F2B3D66;
+  --color-theme-action-hover:#2F2B3D0F;--color-theme-action-selected:#2F2B3D14;
+  --color-theme-divider:#2F2B3D1F;--color-theme-outline-border:#2F2B3D3D;
+  --color-theme-input-border:#2F2B3D38;--color-theme-chip-background:#2F2B3D14;
+  --color-misc-body-bg:#F7F7F7;--color-misc-paper:#FFFFFF;--color-misc-table-header:#FFFFFF;
   --shadow-elevation-gray-shadow-xs:0px 1px 6px 0px rgba(47,43,61,.10);
   --shadow-elevation-gray-shadow-sm:0px 2px 8px 0px rgba(47,43,61,.12);
-  --shadow-elevation-gray-shadow-md:0px 3px 12px 0px rgba(47,43,61,.14);
   --shadow-elevation-primary-primary-shadow-sm:0px 2px 6px 0px rgba(85,120,240,.30);
-  --shadow-elevation-primary-primary-shadow-md:0px 4px 16px 0px rgba(85,120,240,.40);
-  --spacing-p-1:4px;--spacing-p-2:8px;--spacing-p-3:12px;--spacing-p-4:16px;--spacing-p-5:20px;
-  --spacing-p-6:24px;--spacing-p-7:28px;--spacing-p-8:32px;--spacing-p-10:40px;--spacing-p-12:48px;
-  --spacing-gap-1:4px;--spacing-gap-2:8px;--spacing-gap-3:12px;--spacing-gap-4:16px;--spacing-gap-5:20px;--spacing-gap-6:24px;
-  --radius-xs:2px;--radius-sm:4px;--radius-md:6px;--radius-lg:8px;--radius-xl:10px;--radius-border-round:500px;
+  --spacing-p-1:4px;--spacing-p-2:8px;--spacing-p-3:12px;--spacing-p-4:16px;--spacing-p-5:20px;--spacing-p-6:24px;
+  --spacing-gap-1:4px;--spacing-gap-2:8px;--spacing-gap-3:12px;--spacing-gap-4:16px;
+  --radius-sm:4px;--radius-md:6px;--radius-lg:8px;--radius-xl:10px;--radius-border-round:500px;
 }
 
 /* ── typography ── */
-.text-h1{font-size:46px;font-family:"Public Sans";font-weight:500;line-height:68px;}
-.text-h2{font-size:38px;font-family:"Public Sans";font-weight:500;line-height:56px;}
-.text-h3{font-size:28px;font-family:"Public Sans";font-weight:500;line-height:42px;}
-.text-h4{font-size:24px;font-family:"Public Sans";font-weight:500;line-height:38px;}
 .text-h5{font-size:18px;font-family:"Public Sans";font-weight:500;line-height:28px;}
 .text-h6{font-size:15px;font-family:"Public Sans";font-weight:500;line-height:22px;}
 .text-body-1{font-size:15px;font-family:"Public Sans";font-weight:400;line-height:22px;}
-.text-body-1-500{font-size:15px;font-family:"Public Sans";font-weight:500;line-height:22px;}
 .text-body-2{font-size:13px;font-family:"Public Sans";font-weight:400;line-height:20px;}
 .text-body-2-500{font-size:13px;font-family:"Public Sans";font-weight:500;line-height:20px;}
-.text-overline{font-size:12px;font-family:"Public Sans";font-weight:400;line-height:14px;letter-spacing:.8px;text-transform:uppercase;}
 .text-caption{font-size:13px;font-family:"Public Sans";font-weight:400;line-height:18px;letter-spacing:.4px;}
 .text-small{font-size:12px;font-family:"Public Sans";font-weight:400;}
+.text-overline{font-size:12px;font-family:"Public Sans";font-weight:400;line-height:14px;letter-spacing:.8px;text-transform:uppercase;}
 .text-chip{font-size:13px;font-family:"Public Sans";font-weight:500;line-height:20px;}
-.text-btn-medium{font-size:15px;font-family:"Public Sans";font-weight:500;line-height:22px;text-transform:capitalize;}
-.text-btn-small{font-size:13px;font-family:"Public Sans";font-weight:500;line-height:18px;text-transform:capitalize;}
-.text-badge-label{font-size:13px;font-family:"Public Sans";font-weight:500;line-height:16px;}
+.text-btn-small{font-size:13px;font-family:"Public Sans";font-weight:500;line-height:18px;}
 .text-table-header{font-size:13px;font-family:"Public Sans";font-weight:500;line-height:24px;letter-spacing:.2px;text-transform:uppercase;}
+.text-input-text{font-size:15px;font-family:"Public Sans";font-weight:400;line-height:24px;}
 
 /* ── reset ── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html,body{height:100%;font-family:"Public Sans",sans-serif;background:var(--color-misc-body-bg);color:var(--color-theme-text-primary);}
+body{font-family:"Public Sans",sans-serif;background:var(--color-misc-body-bg);color:var(--color-theme-text-primary);padding:32px;}
 
-/* ── layout ── */
-.shell{display:flex;height:100vh;overflow:hidden;}
-
-/* ── SIDEBAR ── */
-aside{
-  width:220px;min-width:220px;height:100%;
-  background:var(--color-misc-paper);
-  border-right:1px solid var(--color-theme-divider);
-  display:flex;flex-direction:column;overflow-y:auto;
-  box-shadow:var(--shadow-elevation-gray-shadow-xs);
-  flex-shrink:0;
-}
-.sidebar-brand{
-  padding:var(--spacing-p-6) var(--spacing-p-5) var(--spacing-p-5);
-  border-bottom:1px solid var(--color-theme-divider);
-}
-.brand-label{color:var(--color-theme-text-subtitle);}
-.brand-name{color:var(--color-theme-text-primary);}
-.nav-group{padding:var(--spacing-p-5) var(--spacing-p-3) var(--spacing-p-3);}
-.nav-group-label{
-  color:var(--color-theme-text-subtitle);
-  padding:0 var(--spacing-p-2) var(--spacing-p-2);
-  display:block;
-}
-.nav-item{
-  display:flex;align-items:center;gap:var(--spacing-gap-2);
-  padding:var(--spacing-p-2) var(--spacing-p-3);
-  border-radius:var(--radius-lg);cursor:pointer;
-  color:var(--color-theme-text-secondary);
-  transition:all .15s;border:none;background:none;width:100%;text-align:left;
-}
-.nav-item:hover{background:var(--color-theme-action-hover);color:var(--color-theme-text-primary);}
-.nav-item.active{
-  background:var(--color-color-palette-primary-opacity-lighter);
-  color:var(--color-color-palette-primary-main);font-weight:500;
-}
-.nav-dot{
-  width:6px;height:6px;border-radius:50%;background:var(--color-theme-divider);flex-shrink:0;
-}
-.nav-item.active .nav-dot{background:var(--color-color-palette-primary-main);}
-
-/* ── MAIN ── */
-main{flex:1;overflow-y:auto;background:var(--color-misc-body-bg);}
-
-/* ── PAGE ── */
-.page{display:none;padding:var(--spacing-p-10) var(--spacing-p-10);}
-.page.active{display:block;}
-
-/* ── PAGE HEADER ── */
-.page-eyebrow{color:var(--color-color-palette-primary-main);margin-bottom:var(--spacing-p-2);}
-.page-title{color:var(--color-theme-text-primary);margin-bottom:var(--spacing-p-3);}
-.page-divider{width:40px;height:3px;background:var(--color-color-palette-primary-main);border-radius:var(--radius-border-round);margin-bottom:var(--spacing-p-3);}
-.page-desc{color:var(--color-theme-text-secondary);max-width:640px;margin-bottom:var(--spacing-p-8);}
-
-/* ── CARD ── */
-.card{
-  background:var(--color-misc-paper);border-radius:var(--radius-xl);
-  border:1px solid var(--color-theme-divider);
-  box-shadow:var(--shadow-elevation-gray-shadow-xs);
-  padding:var(--spacing-p-6);margin-bottom:var(--spacing-p-5);
-}
-.card-title{color:var(--color-theme-text-primary);margin-bottom:var(--spacing-p-1);}
-.card-sub{color:var(--color-theme-text-secondary);margin-bottom:var(--spacing-p-4);}
-
-/* ── CHIP ── */
-.chip{
-  display:inline-flex;align-items:center;
-  padding:var(--spacing-p-1) var(--spacing-p-3);border-radius:var(--radius-border-round);
-}
-.chip-gray{background:var(--color-theme-chip-background);color:var(--color-theme-text-secondary);}
-.chip-primary{background:var(--color-color-palette-primary-opacity-lighter);color:var(--color-color-palette-primary-main);}
+/* ── chip ── */
+.chip{display:inline-flex;align-items:center;padding:2px 10px;border-radius:var(--radius-border-round);}
 .chip-success{background:var(--color-primitive-success-100);color:var(--color-color-palette-success-dark);}
 .chip-warning{background:var(--color-primitive-warning-100);color:var(--color-color-palette-warning-main);}
+.chip-error{background:var(--color-primitive-error-100);color:var(--color-color-palette-error-main);}
 .chip-info{background:var(--color-primitive-info-100);color:var(--color-color-palette-info-main);}
+.chip-gray{background:var(--color-theme-chip-background);color:var(--color-theme-text-secondary);}
+.chip-primary{background:var(--color-color-palette-primary-opacity-lighter);color:var(--color-color-palette-primary-main);}
 
-/* ── TIMELINE (경력) ── */
-.timeline{display:flex;flex-direction:column;gap:0;}
-.tl-item{display:flex;gap:var(--spacing-gap-5);position:relative;}
-.tl-left{display:flex;flex-direction:column;align-items:center;width:20px;flex-shrink:0;}
-.tl-dot{
-  width:14px;height:14px;border-radius:50%;flex-shrink:0;margin-top:4px;
-  background:var(--color-color-palette-primary-main);
-  border:2px solid var(--color-misc-paper);
-  box-shadow:0 0 0 2px var(--color-color-palette-primary-main);
-}
-.tl-dot.gray{background:var(--color-primitive-gray-200);box-shadow:0 0 0 2px var(--color-primitive-gray-200);}
-.tl-line{flex:1;width:2px;background:var(--color-theme-divider);margin:var(--spacing-p-2) 0;}
-.tl-body{flex:1;padding-bottom:var(--spacing-p-7);}
-.tl-period{color:var(--color-color-palette-primary-main);margin-bottom:var(--spacing-p-1);}
-.tl-company{color:var(--color-theme-text-secondary);margin-bottom:var(--spacing-p-3);}
-.tl-bullets{padding-left:var(--spacing-p-5);display:flex;flex-direction:column;gap:var(--spacing-gap-2);}
-.tl-bullets li{color:var(--color-theme-text-secondary);}
-
-/* ── SKILL GRID ── */
-.skill-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:var(--spacing-gap-4);margin-bottom:var(--spacing-p-5);}
-.skill-card{
+/* ── table wrap ── */
+.table-card{
   background:var(--color-misc-paper);border-radius:var(--radius-xl);
-  padding:var(--spacing-p-5);border:1px solid var(--color-theme-divider);
-  box-shadow:var(--shadow-elevation-gray-shadow-xs);transition:transform .2s,box-shadow .2s;
+  border:1px solid var(--color-theme-divider);box-shadow:var(--shadow-elevation-gray-shadow-xs);
+  overflow:hidden;
 }
-.skill-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-elevation-gray-shadow-md);}
-.skill-icon{
-  width:38px;height:38px;border-radius:var(--radius-lg);
-  background:var(--color-color-palette-primary-opacity-lighter);
-  display:flex;align-items:center;justify-content:center;font-size:1.1rem;
-  margin-bottom:var(--spacing-p-3);
+
+/* ── toolbar ── */
+.toolbar{
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--spacing-gap-3);
+  padding:var(--spacing-p-5) var(--spacing-p-6);
+  border-bottom:1px solid var(--color-theme-divider);
 }
-.skill-name{color:var(--color-theme-text-primary);margin-bottom:var(--spacing-p-1);}
-.skill-desc{color:var(--color-theme-text-secondary);}
+.toolbar-left{display:flex;align-items:center;gap:var(--spacing-gap-3);}
+.toolbar-title{color:var(--color-theme-text-primary);}
+.row-count{color:var(--color-theme-text-subtitle);}
 
-/* ── PROGRESS BAR ── */
-.skill-row{display:flex;align-items:center;gap:var(--spacing-gap-4);padding:var(--spacing-p-3) 0;border-bottom:1px solid var(--color-theme-divider);}
-.skill-row:last-child{border-bottom:none;}
-.skill-label{width:140px;flex-shrink:0;color:var(--color-theme-text-primary);}
-.bar-track{flex:1;height:6px;background:var(--color-theme-action-hover);border-radius:var(--radius-border-round);overflow:hidden;}
-.bar-fill{height:100%;border-radius:var(--radius-border-round);background:var(--color-color-palette-primary-main);}
-.bar-pct{width:36px;text-align:right;color:var(--color-theme-text-subtitle);flex-shrink:0;}
+/* search */
+.search-wrap{position:relative;display:flex;align-items:center;}
+.search-icon{position:absolute;left:10px;color:var(--color-theme-text-subtitle);pointer-events:none;font-size:.9rem;}
+.search-input{
+  padding:var(--spacing-p-2) var(--spacing-p-4) var(--spacing-p-2) 32px;
+  border:1.5px solid var(--color-theme-input-border);border-radius:var(--radius-lg);
+  background:var(--color-misc-paper);color:var(--color-theme-text-primary);
+  outline:none;transition:border-color .2s;width:220px;
+  font-family:"Public Sans",sans-serif;font-size:14px;
+}
+.search-input:focus{border-color:var(--color-color-palette-primary-main);}
+.search-input::placeholder{color:var(--color-theme-text-disabled);}
 
-/* ── YEAR TABS ── */
-.year-tabs{display:flex;gap:var(--spacing-gap-2);margin-bottom:var(--spacing-p-6);flex-wrap:wrap;}
-.year-tab{
-  padding:var(--spacing-p-2) var(--spacing-p-5);border-radius:var(--radius-border-round);
-  cursor:pointer;border:1.5px solid var(--color-theme-outline-border);
-  background:var(--color-misc-paper);color:var(--color-theme-text-secondary);
+/* filter select */
+.filter-select{
+  padding:var(--spacing-p-2) var(--spacing-p-4);
+  border:1.5px solid var(--color-theme-input-border);border-radius:var(--radius-lg);
+  background:var(--color-misc-paper);color:var(--color-theme-text-primary);
+  outline:none;cursor:pointer;font-family:"Public Sans",sans-serif;font-size:13px;
+  transition:border-color .2s;
+}
+.filter-select:focus{border-color:var(--color-color-palette-primary-main);}
+
+/* ── table ── */
+.table-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;}
+thead{background:var(--color-misc-table-header);}
+th{
+  padding:var(--spacing-p-3) var(--spacing-p-5);
+  text-align:left;color:var(--color-theme-text-subtitle);
+  border-bottom:1px solid var(--color-theme-divider);
+  white-space:nowrap;user-select:none;
+}
+th.sortable{cursor:pointer;}
+th.sortable:hover{color:var(--color-color-palette-primary-main);background:var(--color-theme-action-hover);}
+th.sort-asc,th.sort-desc{color:var(--color-color-palette-primary-main);}
+.sort-icon{margin-left:4px;font-size:.75rem;display:inline-block;transition:transform .15s;}
+th.sort-desc .sort-icon{transform:rotate(180deg);}
+
+td{
+  padding:var(--spacing-p-3) var(--spacing-p-5);
+  color:var(--color-theme-text-primary);
+  border-bottom:1px solid var(--color-theme-divider);
+  vertical-align:middle;
+}
+tbody tr:last-child td{border-bottom:none;}
+tbody tr{transition:background .12s;}
+tbody tr:hover{background:var(--color-theme-action-hover);}
+tbody tr.selected{background:var(--color-color-palette-primary-opacity-lighter);}
+
+/* avatar */
+.avatar-cell{display:flex;align-items:center;gap:var(--spacing-gap-3);}
+.avatar{
+  width:32px;height:32px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:600;
+  color:var(--color-misc-paper);
+}
+.avatar-name{color:var(--color-theme-text-primary);}
+.avatar-email{color:var(--color-theme-text-subtitle);}
+
+/* checkbox */
+.cb{width:16px;height:16px;cursor:pointer;accent-color:var(--color-color-palette-primary-main);}
+
+/* action btn */
+.act-btn{
+  background:none;border:none;cursor:pointer;padding:var(--spacing-p-1) var(--spacing-p-2);
+  border-radius:var(--radius-md);color:var(--color-theme-text-subtitle);font-size:.85rem;
   transition:all .15s;
 }
-.year-tab:hover{border-color:var(--color-color-palette-primary-main);color:var(--color-color-palette-primary-main);}
-.year-tab.active{
-  background:var(--color-color-palette-primary-main);
-  border-color:var(--color-color-palette-primary-main);
-  color:var(--color-misc-paper);
-  box-shadow:var(--shadow-elevation-primary-primary-shadow-sm);
-}
-.year-panel{display:none;}
-.year-panel.active{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:var(--spacing-gap-5);}
+.act-btn:hover{background:var(--color-theme-action-hover);color:var(--color-color-palette-primary-main);}
 
-/* ── PROJECT CARD ── */
-.proj-card{
-  background:var(--color-misc-paper);border-radius:var(--radius-xl);overflow:hidden;
-  border:1px solid var(--color-theme-divider);box-shadow:var(--shadow-elevation-gray-shadow-xs);
-  transition:transform .2s,box-shadow .2s;
-}
-.proj-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-elevation-gray-shadow-md);}
-.proj-thumb{
-  height:140px;display:flex;align-items:center;justify-content:center;font-size:2.6rem;
-  background:var(--color-color-palette-primary-opacity-lighter);
-}
-.proj-body{padding:var(--spacing-p-5);}
-.proj-tags{display:flex;flex-wrap:wrap;gap:var(--spacing-gap-2);margin-bottom:var(--spacing-p-3);}
-.proj-title{color:var(--color-theme-text-primary);margin-bottom:var(--spacing-p-2);}
-.proj-desc{color:var(--color-theme-text-secondary);}
-.proj-result{
-  display:inline-flex;align-items:center;gap:var(--spacing-gap-1);
-  margin-top:var(--spacing-p-4);color:var(--color-color-palette-success-main);
-}
+/* empty */
+.empty{padding:48px 0;text-align:center;color:var(--color-theme-text-subtitle);}
+.empty-icon{font-size:2.5rem;margin-bottom:12px;}
 
-/* ── ABOUT ── */
-.about-hero{
-  background:linear-gradient(135deg,var(--color-primitive-primary-100),var(--color-misc-paper));
-  border-radius:var(--radius-xl);padding:var(--spacing-p-8);margin-bottom:var(--spacing-p-6);
-  display:flex;align-items:center;gap:var(--spacing-gap-6);
-  border:1px solid var(--color-theme-divider);
+/* ── pagination ── */
+.pagination{
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;
+  padding:var(--spacing-p-4) var(--spacing-p-6);
+  border-top:1px solid var(--color-theme-divider);
 }
-.avatar{
-  width:80px;height:80px;border-radius:50%;flex-shrink:0;
-  background:var(--color-color-palette-primary-main);
-  display:flex;align-items:center;justify-content:center;font-size:2rem;
-  box-shadow:var(--shadow-elevation-primary-primary-shadow-md);
+.page-info{color:var(--color-theme-text-subtitle);}
+.page-btns{display:flex;align-items:center;gap:var(--spacing-gap-1);}
+.page-btn{
+  min-width:32px;height:32px;padding:0 var(--spacing-p-2);
+  display:flex;align-items:center;justify-content:center;
+  border-radius:var(--radius-md);border:1px solid var(--color-theme-outline-border);
+  background:var(--color-misc-paper);cursor:pointer;transition:all .15s;
+  color:var(--color-theme-text-secondary);
 }
-.about-name{color:var(--color-theme-text-primary);margin-bottom:var(--spacing-p-1);}
-.about-role{color:var(--color-color-palette-primary-main);margin-bottom:var(--spacing-p-3);}
-.about-chips{display:flex;flex-wrap:wrap;gap:var(--spacing-gap-2);}
-.about-section{margin-bottom:var(--spacing-p-6);}
-.about-section-title{color:var(--color-theme-text-primary);border-left:3px solid var(--color-color-palette-primary-main);padding-left:var(--spacing-p-3);margin-bottom:var(--spacing-p-4);}
-.about-text{color:var(--color-theme-text-secondary);line-height:1.8;}
-.value-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:var(--spacing-gap-4);}
-.value-card{
-  background:var(--color-misc-paper);border-radius:var(--radius-xl);
-  padding:var(--spacing-p-5);border:1px solid var(--color-theme-divider);
-  box-shadow:var(--shadow-elevation-gray-shadow-xs);text-align:center;
-}
-.value-emoji{font-size:1.8rem;margin-bottom:var(--spacing-p-3);}
-.value-title{color:var(--color-theme-text-primary);margin-bottom:var(--spacing-p-2);}
-.value-desc{color:var(--color-theme-text-subtitle);}
-
-@media(max-width:680px){
-  aside{width:180px;min-width:180px;}
-  .page{padding:var(--spacing-p-6) var(--spacing-p-5);}
-}
+.page-btn:hover:not(:disabled){background:var(--color-theme-action-hover);border-color:var(--color-color-palette-primary-main);color:var(--color-color-palette-primary-main);}
+.page-btn.active{background:var(--color-color-palette-primary-main);border-color:var(--color-color-palette-primary-main);color:#fff;font-weight:600;}
+.page-btn:disabled{opacity:.4;cursor:not-allowed;}
+.per-page-wrap{display:flex;align-items:center;gap:8px;color:var(--color-theme-text-subtitle);}
 </style>
 </head>
 <body>
-<div class="shell">
 
-<!-- SIDEBAR -->
-<aside>
-  <div class="sidebar-brand">
-    <p class="text-overline brand-label">PORTFOLIO · 기획자</p>
-    <p class="text-h6 brand-name">김기획</p>
+<div class="table-card">
+  <!-- toolbar -->
+  <div class="toolbar">
+    <div class="toolbar-left">
+      <p class="text-h6 toolbar-title">팀원 목록</p>
+      <span class="text-caption row-count" id="rowCount"></span>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input class="search-input text-body-2" id="searchInput" placeholder="이름 또는 이메일 검색..." oninput="render()">
+      </div>
+      <select class="filter-select text-body-2" id="deptFilter" onchange="render()">
+        <option value="">전체 부서</option>
+        <option>디자인팀</option>
+        <option>개발팀</option>
+        <option>기획팀</option>
+        <option>마케팅팀</option>
+        <option>HR팀</option>
+      </select>
+      <select class="filter-select text-body-2" id="statusFilter" onchange="render()">
+        <option value="">전체 상태</option>
+        <option>정상</option>
+        <option>휴가</option>
+        <option>출장</option>
+        <option>퇴사</option>
+      </select>
+    </div>
   </div>
 
-  <div class="nav-group">
-    <span class="text-overline nav-group-label">메뉴</span>
-    <button class="nav-item text-body-1 active" onclick="nav(this,'about')">
-      <span class="nav-dot"></span> 자기 소개
-    </button>
-    <button class="nav-item text-body-1" onclick="nav(this,'career')">
-      <span class="nav-dot"></span> 경력 사항
-    </button>
-    <button class="nav-item text-body-1" onclick="nav(this,'skills')">
-      <span class="nav-dot"></span> 주요 스킬
-    </button>
-    <button class="nav-item text-body-1" onclick="nav(this,'portfolio')">
-      <span class="nav-dot"></span> 포트폴리오
-    </button>
+  <!-- table -->
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:40px;"><input class="cb" type="checkbox" id="chkAll" onchange="toggleAll(this)"></th>
+          <th class="text-table-header sortable" data-col="name" onclick="sort('name')">이름 <span class="sort-icon">▲</span></th>
+          <th class="text-table-header sortable" data-col="dept" onclick="sort('dept')">부서 <span class="sort-icon">▲</span></th>
+          <th class="text-table-header sortable" data-col="role" onclick="sort('role')">직급 <span class="sort-icon">▲</span></th>
+          <th class="text-table-header sortable" data-col="status" onclick="sort('status')">상태 <span class="sort-icon">▲</span></th>
+          <th class="text-table-header sortable" data-col="joined" onclick="sort('joined')">입사일 <span class="sort-icon">▲</span></th>
+          <th class="text-table-header" style="width:80px;">액션</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+    <div class="empty" id="empty" style="display:none;">
+      <div class="empty-icon">🔍</div>
+      <p class="text-body-1-500" style="color:var(--color-theme-text-primary);margin-bottom:4px;">검색 결과가 없습니다</p>
+      <p class="text-caption">다른 키워드나 필터를 시도해 보세요.</p>
+    </div>
   </div>
-</aside>
 
-<!-- MAIN -->
-<main>
-
-  <!-- 자기 소개 -->
-  <section class="page active" id="page-about">
-    <p class="text-overline page-eyebrow">About Me</p>
-    <div class="page-divider"></div>
-    <h1 class="text-h3 page-title">자기 소개</h1>
-    <p class="text-body-1 page-desc">사용자와 비즈니스를 잇는 기획자로서, 데이터 기반의 의사결정과 공감 기반의 UX 설계를 추구합니다.</p>
-
-    <div class="about-hero">
-      <div class="avatar">👩‍💼</div>
-      <div>
-        <p class="text-h4 about-name">김기획</p>
-        <p class="text-h6 about-role">Product Planner · UX Strategist</p>
-        <div class="about-chips">
-          <span class="text-chip chip chip-primary">서비스 기획 7년</span>
-          <span class="text-chip chip chip-gray">서울 · 원격 가능</span>
-          <span class="text-chip chip chip-success">재직 중</span>
-        </div>
-      </div>
+  <!-- pagination -->
+  <div class="pagination">
+    <div class="per-page-wrap">
+      <span class="text-caption">페이지당 행:</span>
+      <select class="filter-select text-body-2" id="perPage" onchange="curPage=1;render()">
+        <option>5</option><option selected>10</option><option>20</option><option>50</option>
+      </select>
     </div>
-
-    <div class="about-section">
-      <p class="text-h5 about-section-title">소개</p>
-      <p class="text-body-1 about-text">
-        안녕하세요, 사용자 중심의 서비스를 기획하는 김기획입니다.<br><br>
-        7년간 커머스·커뮤니티·B2B SaaS 도메인에서 신규 서비스 기획, 앱 리뉴얼, 데이터 기반 기능 개선을 리드해 왔습니다. 정성적 인터뷰와 정량적 분석을 결합해 사용자 문제를 구조화하고, 팀 전체가 한 방향을 바라볼 수 있도록 커뮤니케이션하는 것을 가장 중요하게 생각합니다.<br><br>
-        좋은 서비스란 사용자가 "이게 왜 없었지?"라고 느끼는 순간을 만드는 것이라 믿습니다.
-      </p>
-    </div>
-
-    <div class="about-section">
-      <p class="text-h5 about-section-title">핵심 가치</p>
-      <div class="value-grid">
-        <div class="value-card">
-          <div class="value-emoji">🔍</div>
-          <p class="text-h6 value-title">근거 기반 기획</p>
-          <p class="text-body-2 value-desc">직관보다 데이터, 가정보다 검증을 먼저 합니다.</p>
-        </div>
-        <div class="value-card">
-          <div class="value-emoji">🤝</div>
-          <p class="text-h6 value-title">협업 중심</p>
-          <p class="text-body-2 value-desc">개발·디자인·CS 모든 팀의 언어로 소통합니다.</p>
-        </div>
-        <div class="value-card">
-          <div class="value-emoji">🚀</div>
-          <p class="text-h6 value-title">빠른 실행</p>
-          <p class="text-body-2 value-desc">MVP로 빠르게 가설을 검증하고 개선합니다.</p>
-        </div>
-        <div class="value-card">
-          <div class="value-emoji">🎯</div>
-          <p class="text-h6 value-title">임팩트 집중</p>
-          <p class="text-body-2 value-desc">비즈니스 지표와 사용자 만족 모두를 봅니다.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 경력 사항 -->
-  <section class="page" id="page-career">
-    <p class="text-overline page-eyebrow">Career</p>
-    <div class="page-divider"></div>
-    <h1 class="text-h3 page-title">경력 사항</h1>
-    <p class="text-body-1 page-desc">총 7년간 스타트업부터 대기업까지 다양한 규모의 조직에서 서비스를 기획해 왔습니다.</p>
-
-    <div class="timeline">
-      <div class="tl-item">
-        <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
-        <div class="tl-body">
-          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px;">
-            <p class="text-h5 card-title">㈜테크커머스 — 프로덕트 기획 팀장</p>
-            <span class="text-chip chip chip-primary">현재</span>
-          </div>
-          <p class="text-caption tl-period">2022.03 — 현재 · 3년차</p>
-          <p class="text-body-2 tl-company">이커머스 플랫폼 · 기획팀 리드 · 팀원 4명 관리</p>
-          <ul class="tl-bullets">
-            <li class="text-body-2">쇼핑 앱 전면 리뉴얼 기획 리드 → 전환율 <strong>+23%</strong>, 이탈률 <strong>-18%</strong></li>
-            <li class="text-body-2">개인화 추천 기능 기획 및 A/B 테스트 운영 → 클릭률 <strong>+31%</strong></li>
-            <li class="text-body-2">분기별 OKR 수립 및 팀 KPI 관리, 스프린트 계획 주도</li>
-          </ul>
-        </div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
-        <div class="tl-body">
-          <p class="text-h5 card-title" style="margin-bottom:8px;">㈜소셜링크 — 서비스 기획자</p>
-          <p class="text-caption tl-period">2020.07 — 2022.02 · 1년 8개월</p>
-          <p class="text-body-2 tl-company">커뮤니티 스타트업 · 앱 기획 전담</p>
-          <ul class="tl-bullets">
-            <li class="text-body-2">커뮤니티 플랫폼 0→1 기획, 출시 3개월 만에 MAU <strong>5만</strong> 달성</li>
-            <li class="text-body-2">신규 메시징 기능 기획 → DAU <strong>+42%</strong> 기여</li>
-            <li class="text-body-2">사용자 인터뷰 30건+ 수행, 페르소나 3종 도출</li>
-          </ul>
-        </div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-left"><div class="tl-dot gray"></div><div class="tl-line"></div></div>
-        <div class="tl-body">
-          <p class="text-h5 card-title" style="margin-bottom:8px;">㈜디지털에이전시 — 웹 기획자</p>
-          <p class="text-caption tl-period">2018.03 — 2020.06 · 2년 4개월</p>
-          <p class="text-body-2 tl-company">디지털 마케팅 에이전시 · 웹/앱 기획</p>
-          <ul class="tl-bullets">
-            <li class="text-body-2">금융·유통 고객사 웹 리뉴얼 프로젝트 10건+ 기획</li>
-            <li class="text-body-2">IA 설계, 화면 설계서 작성, 유관 부서 협업 조율</li>
-          </ul>
-        </div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-left"><div class="tl-dot gray"></div></div>
-        <div class="tl-body">
-          <p class="text-h5 card-title" style="margin-bottom:8px;">학력 · 한국대학교 경영정보학과</p>
-          <p class="text-caption tl-period">2014.03 — 2018.02 · 졸업</p>
-          <p class="text-body-2 tl-company">UX 동아리 회장, 캡스톤 우수상 수상</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 주요 스킬 -->
-  <section class="page" id="page-skills">
-    <p class="text-overline page-eyebrow">Skills</p>
-    <div class="page-divider"></div>
-    <h1 class="text-h3 page-title">주요 스킬</h1>
-    <p class="text-body-1 page-desc">기획 전반의 역량과 협업 도구 활용 능력을 보유하고 있습니다.</p>
-
-    <div class="skill-grid" style="margin-bottom:var(--spacing-p-8);">
-      <div class="skill-card"><div class="skill-icon">🗂️</div><p class="text-h6 skill-name">서비스 기획</p><p class="text-body-2 skill-desc">사용자 리서치, IA 설계, 기능 정의서</p></div>
-      <div class="skill-card"><div class="skill-icon">🎨</div><p class="text-h6 skill-name">UX/UI 설계</p><p class="text-body-2 skill-desc">Figma 와이어프레임·프로토타입</p></div>
-      <div class="skill-card"><div class="skill-icon">📊</div><p class="text-h6 skill-name">데이터 분석</p><p class="text-body-2 skill-desc">GA4, Amplitude, SQL</p></div>
-      <div class="skill-card"><div class="skill-icon">🚀</div><p class="text-h6 skill-name">프로젝트 관리</p><p class="text-body-2 skill-desc">Jira, Notion, 애자일 스프린트</p></div>
-      <div class="skill-card"><div class="skill-icon">🧪</div><p class="text-h6 skill-name">A/B 테스트</p><p class="text-body-2 skill-desc">가설 수립·실험 설계·결과 분석</p></div>
-      <div class="skill-card"><div class="skill-icon">🤝</div><p class="text-h6 skill-name">이해관계자 관리</p><p class="text-body-2 skill-desc">개발·디자인·마케팅 협업</p></div>
-    </div>
-
-    <div class="card">
-      <p class="text-h5 card-title" style="margin-bottom:var(--spacing-p-5);">숙련도</p>
-      <div id="bars"></div>
-    </div>
-
-    <div class="card">
-      <p class="text-h5 card-title" style="margin-bottom:var(--spacing-p-4);">자격증 · 교육</p>
-      <div style="display:flex;flex-wrap:wrap;gap:8px;">
-        <span class="text-chip chip chip-primary">정보처리기사</span>
-        <span class="text-chip chip chip-gray">SQLD (SQL 개발자)</span>
-        <span class="text-chip chip chip-gray">구글 애널리틱스 자격증</span>
-        <span class="text-chip chip chip-gray">Figma Advanced Certificate</span>
-        <span class="text-chip chip chip-info">영어 비즈니스 회화 가능</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- 포트폴리오 -->
-  <section class="page" id="page-portfolio">
-    <p class="text-overline page-eyebrow">Portfolio</p>
-    <div class="page-divider"></div>
-    <h1 class="text-h3 page-title">포트폴리오</h1>
-    <p class="text-body-1 page-desc">연도별로 진행한 주요 프로젝트를 정리했습니다.</p>
-
-    <div class="year-tabs" id="yearTabs"></div>
-    <div id="yearPanels"></div>
-  </section>
-
-</main>
+    <span class="text-caption page-info" id="pageInfo"></span>
+    <div class="page-btns" id="pageBtns"></div>
+  </div>
 </div>
 
 <script>
-/* ── NAV ── */
-function nav(el, id) {
-  document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  el.classList.add('active');
-  document.getElementById('page-' + id).classList.add('active');
-  document.querySelector('main').scrollTo(0, 0);
+const COLORS = ['#5578F0','#28C76F','#FF9F43','#FF4C51','#00BAD1','#808390','#4D6CD8','#24B364'];
+const STATUS_MAP = {정상:'chip-success',휴가:'chip-info',출장:'chip-warning',퇴사:'chip-error'};
+
+const RAW = [
+  {name:'김민지',email:'minji@co.kr',dept:'디자인팀',role:'팀장',status:'정상',joined:'2020-03-02'},
+  {name:'이준호',email:'junho@co.kr',dept:'개발팀',role:'시니어',status:'정상',joined:'2019-07-15'},
+  {name:'박서연',email:'seoyeon@co.kr',dept:'기획팀',role:'매니저',status:'휴가',joined:'2021-01-10'},
+  {name:'최현우',email:'hyunwoo@co.kr',dept:'마케팅팀',role:'주니어',status:'출장',joined:'2022-05-23'},
+  {name:'정다은',email:'daeun@co.kr',dept:'HR팀',role:'팀장',status:'정상',joined:'2018-11-30'},
+  {name:'한지수',email:'jisu@co.kr',dept:'개발팀',role:'주니어',status:'정상',joined:'2023-02-14'},
+  {name:'오민석',email:'minseok@co.kr',dept:'디자인팀',role:'시니어',status:'정상',joined:'2020-08-01'},
+  {name:'강예진',email:'yejin@co.kr',dept:'기획팀',role:'주니어',status:'휴가',joined:'2023-06-19'},
+  {name:'윤태양',email:'taeyang@co.kr',dept:'개발팀',role:'팀장',status:'정상',joined:'2017-04-05'},
+  {name:'신하은',email:'haeun@co.kr',dept:'마케팅팀',role:'매니저',status:'출장',joined:'2021-09-12'},
+  {name:'임재원',email:'jaewon@co.kr',dept:'개발팀',role:'시니어',status:'정상',joined:'2019-12-03'},
+  {name:'배수진',email:'sujin@co.kr',dept:'HR팀',role:'주니어',status:'정상',joined:'2022-10-28'},
+  {name:'노준혁',email:'junhyuk@co.kr',dept:'기획팀',role:'시니어',status:'퇴사',joined:'2018-06-17'},
+  {name:'홍예나',email:'yena@co.kr',dept:'디자인팀',role:'주니어',status:'정상',joined:'2024-01-08'},
+  {name:'문성민',email:'sungmin@co.kr',dept:'개발팀',role:'주니어',status:'정상',joined:'2024-03-25'},
+  {name:'고지현',email:'jihyun@co.kr',dept:'마케팅팀',role:'팀장',status:'정상',joined:'2016-09-01'},
+  {name:'서태준',email:'taejun@co.kr',dept:'기획팀',role:'매니저',status:'휴가',joined:'2020-04-14'},
+  {name:'류민아',email:'mina@co.kr',dept:'디자인팀',role:'매니저',status:'정상',joined:'2021-07-22'},
+];
+
+let sortCol='name', sortDir=1, curPage=1, selected=new Set();
+
+function avatarColor(name){ return COLORS[name.charCodeAt(0)%COLORS.length]; }
+function initials(name){ return name.slice(0,1); }
+
+function filtered(){
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const dept = document.getElementById('deptFilter').value;
+  const st = document.getElementById('statusFilter').value;
+  return RAW.filter(r=>{
+    const matchQ = !q || r.name.toLowerCase().includes(q) || r.email.toLowerCase().includes(q);
+    const matchD = !dept || r.dept===dept;
+    const matchS = !st || r.status===st;
+    return matchQ && matchD && matchS;
+  }).sort((a,b)=>{
+    let va=a[sortCol], vb=b[sortCol];
+    return sortDir*(va<vb?-1:va>vb?1:0);
+  });
 }
 
-/* ── SKILL BARS ── */
-const bars = [
-  {label:'서비스 기획', pct:95},
-  {label:'UX 리서치', pct:88},
-  {label:'Figma / 와이어프레임', pct:82},
-  {label:'데이터 분석 (GA4)', pct:78},
-  {label:'SQL', pct:65},
-  {label:'애자일 / 스크럼', pct:90},
-  {label:'이해관계자 관리', pct:92},
-];
-const barEl = document.getElementById('bars');
-bars.forEach(b => {
-  barEl.innerHTML += `
-    <div class="skill-row">
-      <span class="text-body-2-500 skill-label">${b.label}</span>
-      <div class="bar-track"><div class="bar-fill" style="width:${b.pct}%"></div></div>
-      <span class="text-caption bar-pct">${b.pct}%</span>
-    </div>`;
-});
-
-/* ── PORTFOLIO DATA ── */
-const projects = {
-  '2025': [
-    {emoji:'🛒', color:'var(--color-primitive-primary-100)', tags:['앱 기획','A/B테스트','커머스'], title:'쇼핑 앱 개인화 추천 기능', desc:'사용자 행동 데이터를 분석해 개인화 추천 알고리즘 기획. A/B 테스트 설계 및 운영.', result:'CTR +31%'},
-    {emoji:'📋', color:'var(--color-primitive-info-100)', tags:['내부 툴','B2B'], title:'내부 운영 어드민 고도화', desc:'운영팀 Pain Point 인터뷰 → 반복 업무 50% 자동화 기획.', result:'업무 시간 -3h/일'},
-  ],
-  '2024': [
-    {emoji:'🛍️', color:'var(--color-primitive-primary-100)', tags:['앱 리뉴얼','UX'], title:'쇼핑 앱 전면 리뉴얼', desc:'사용자 이탈률 원인 분석 후 IA 전면 재설계. 기획 리드.', result:'전환율 +23%'},
-    {emoji:'🔔', color:'var(--color-primitive-warning-100)', tags:['기능 기획','푸시'], title:'맞춤형 알림 시스템 기획', desc:'세그먼트별 알림 전략 수립, 클릭률 최적화 실험.', result:'오픈율 +19%'},
-    {emoji:'📦', color:'var(--color-primitive-success-100)', tags:['물류','B2B'], title:'판매자 센터 리뉴얼', desc:'셀러 인터뷰 20건 기반 대시보드·정산 기능 개선.', result:'NPS +12점'},
-  ],
-  '2023': [
-    {emoji:'💬', color:'var(--color-primitive-info-100)', tags:['커뮤니티','신규'], title:'커뮤니티 메시징 기능', desc:'1:1 채팅 및 그룹 채팅 기능 신규 기획. DAU 기여.', result:'DAU +42%'},
-    {emoji:'🗺️', color:'var(--color-primitive-warning-100)', tags:['지도','O2O'], title:'오프라인 매장 연동 기획', desc:'지도 기반 매장 탐색 기능 기획, 파트너사 협의 주도.', result:'신규 MAU 8천'},
-  ],
-  '2022': [
-    {emoji:'🌱', color:'var(--color-primitive-success-100)', tags:['0→1','MVP'], title:'커뮤니티 플랫폼 런칭', desc:'서비스 컨셉 정의부터 MVP 출시까지 전 과정 기획 리드.', result:'MAU 5만 (3개월)'},
-    {emoji:'📊', color:'var(--color-primitive-primary-100)', tags:['데이터','대시보드'], title:'B2B 파트너 대시보드', desc:'파트너사 요청 수렴 → 데이터 시각화 중심 대시보드 기획.', result:'파트너 만족도 92%'},
-  ],
-};
-
-const tabsEl = document.getElementById('yearTabs');
-const panelsEl = document.getElementById('yearPanels');
-const years = Object.keys(projects).sort((a,b)=>b-a);
-
-years.forEach((yr, i) => {
-  // tab
-  const tab = document.createElement('button');
-  tab.className = 'text-btn-small year-tab' + (i===0?' active':'');
-  tab.textContent = yr;
-  tab.onclick = () => {
-    document.querySelectorAll('.year-tab').forEach(t=>t.classList.remove('active'));
-    document.querySelectorAll('.year-panel').forEach(p=>p.classList.remove('active'));
-    tab.classList.add('active');
-    document.getElementById('panel-'+yr).classList.add('active');
-  };
-  tabsEl.appendChild(tab);
-
-  // panel
-  const panel = document.createElement('div');
-  panel.id = 'panel-'+yr;
-  panel.className = 'year-panel' + (i===0?' active':'');
-  projects[yr].forEach(p => {
-    panel.innerHTML += `
-      <div class="proj-card">
-        <div class="proj-thumb" style="background:${p.color};">${p.emoji}</div>
-        <div class="proj-body">
-          <div class="proj-tags">${p.tags.map(t=>`<span class="text-chip chip chip-primary">${t}</span>`).join('')}</div>
-          <p class="text-h6 proj-title">${p.title}</p>
-          <p class="text-body-2 proj-desc">${p.desc}</p>
-          <p class="text-body-2-500 proj-result">✅ ${p.result}</p>
-        </div>
-      </div>`;
+function sort(col){
+  if(sortCol===col) sortDir*=-1; else{sortCol=col;sortDir=1;}
+  document.querySelectorAll('th[data-col]').forEach(th=>{
+    th.classList.remove('sort-asc','sort-desc');
+    if(th.dataset.col===col) th.classList.add(sortDir===1?'sort-asc':'sort-desc');
   });
-  panelsEl.appendChild(panel);
-});
+  curPage=1; render();
+}
+
+function toggleAll(cb){
+  const rows = filtered();
+  const perPage = +document.getElementById('perPage').value;
+  const start=(curPage-1)*perPage, page=rows.slice(start,start+perPage);
+  page.forEach(r=> cb.checked ? selected.add(r.email) : selected.delete(r.email));
+  render();
+}
+
+function toggleRow(email){ selected.has(email)?selected.delete(email):selected.add(email); render(); }
+
+function render(){
+  const rows = filtered();
+  const perPage = +document.getElementById('perPage').value;
+  const total = rows.length, pages = Math.max(1,Math.ceil(total/perPage));
+  if(curPage>pages) curPage=pages;
+  const start=(curPage-1)*perPage;
+  const page = rows.slice(start, start+perPage);
+
+  document.getElementById('rowCount').textContent = `${total}명`;
+  const tbody = document.getElementById('tbody');
+  const empty = document.getElementById('empty');
+
+  if(!page.length){tbody.innerHTML='';empty.style.display='block';} 
+  else {
+    empty.style.display='none';
+    tbody.innerHTML = page.map(r=>`
+      <tr class="${selected.has(r.email)?'selected':''}" onclick="toggleRow('${r.email}')">
+        <td onclick="event.stopPropagation()"><input class="cb" type="checkbox" ${selected.has(r.email)?'checked':''} onchange="toggleRow('${r.email}')"></td>
+        <td>
+          <div class="avatar-cell">
+            <div class="avatar" style="background:${avatarColor(r.name)}">${initials(r.name)}</div>
+            <div><p class="text-body-2-500 avatar-name">${r.name}</p><p class="text-small avatar-email">${r.email}</p></div>
+          </div>
+        </td>
+        <td class="text-body-2">${r.dept}</td>
+        <td class="text-body-2">${r.role}</td>
+        <td><span class="chip text-chip ${STATUS_MAP[r.status]||'chip-gray'}">${r.status}</span></td>
+        <td class="text-body-2" style="color:var(--color-theme-text-secondary)">${r.joined}</td>
+        <td>
+          <button class="act-btn" title="수정" onclick="event.stopPropagation()">✏️</button>
+          <button class="act-btn" title="삭제" onclick="event.stopPropagation()">🗑️</button>
+        </td>
+      </tr>`).join('');
+  }
+
+  // page info
+  const s=total?start+1:0, e=Math.min(start+perPage,total);
+  document.getElementById('pageInfo').textContent = `${s}–${e} / 전체 ${total}명`;
+
+  // page buttons
+  const btns = document.getElementById('pageBtns');
+  let html = `<button class="page-btn text-btn-small" onclick="go(${curPage-1})" ${curPage<=1?'disabled':''}>‹</button>`;
+  for(let i=1;i<=pages;i++){
+    if(pages<=7||i===1||i===pages||Math.abs(i-curPage)<=1)
+      html+=`<button class="page-btn text-btn-small${i===curPage?' active':''}" onclick="go(${i})">${i}</button>`;
+    else if(Math.abs(i-curPage)===2)
+      html+=`<span class="text-caption" style="padding:0 2px;color:var(--color-theme-text-subtitle)">…</span>`;
+  }
+  html+=`<button class="page-btn text-btn-small" onclick="go(${curPage+1})" ${curPage>=pages?'disabled':''}>›</button>`;
+  btns.innerHTML=html;
+
+  // all-check state
+  const allCb = document.getElementById('chkAll');
+  const pageEmails = page.map(r=>r.email);
+  allCb.checked = pageEmails.length>0 && pageEmails.every(e=>selected.has(e));
+  allCb.indeterminate = !allCb.checked && pageEmails.some(e=>selected.has(e));
+}
+
+function go(p){ curPage=p; render(); }
+
+render();
 </script>
 </body>
 </html>
