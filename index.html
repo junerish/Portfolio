@@ -44,13 +44,53 @@ ul,ol{list-style:none;}
 
 /* ── Layout helpers ──────────────────────────────────────────── */
 .page-wrap{max-width:1200px;margin:0 auto;padding:0 48px;}
+
+/* ── Tablet (≤900px) ────────────────────────────────────────── */
 @media(max-width:900px){
-  .page-wrap{padding:0 24px;}
-  .grid-2{grid-template-columns:1fr!important;}
+  .page-wrap{padding:0 28px;}
   .grid-3{grid-template-columns:1fr 1fr!important;}
   .text-h1{font-size:32px!important;line-height:46px!important;}
   .text-h2{font-size:26px!important;line-height:38px!important;}
   .nav-links{display:none!important;}
+  .hamburger{display:flex!important;}
+}
+
+/* ── Mobile (≤640px) ─────────────────────────────────────────── */
+@media(max-width:640px){
+  .page-wrap{padding:0 20px!important;}
+  .grid-2{grid-template-columns:1fr!important;}
+  .grid-3{grid-template-columns:1fr!important;}
+  .text-h1{font-size:24px!important;line-height:34px!important;}
+  .text-h2{font-size:20px!important;line-height:30px!important;}
+  .text-h3{font-size:18px!important;line-height:28px!important;}
+  .text-h4{font-size:16px!important;line-height:24px!important;}
+  .text-h5{font-size:15px!important;line-height:22px!important;}
+}
+
+/* ── Hamburger (hidden on desktop) ──────────────────────────── */
+.hamburger{display:none;background:none;border:none;cursor:pointer;width:40px;height:40px;align-items:center;justify-content:center;flex-shrink:0;}
+
+/* ── Mobile component overrides ──────────────────────────────── */
+@media(max-width:640px){
+  .profile-row{flex-direction:column!important;align-items:flex-start!important;gap:16px!important;}
+  .career-timeline{padding-left:32px!important;}
+  .career-dot{left:-36px!important;top:8px!important;}
+  .career-grid{grid-template-columns:1fr!important;gap:4px!important;}
+  .section-pad-lg{padding:48px 20px!important;}
+  .portfolio-gap{gap:24px!important;}
+  .detail-grid{grid-template-columns:1fr!important;gap:24px!important;}
+  .skill-cols{grid-template-columns:1fr!important;gap:32px!important;}
+  .comp-grid{grid-template-columns:1fr!important;gap:10px!important;}
+  .footer-row{flex-direction:column!important;gap:8px!important;}
+  .contact-grid{grid-template-columns:1fr!important;gap:40px!important;}
+  .timeline-meta{padding-top:0!important;}
+  /* Section & About spacing */
+  .mob-section{padding-top:32px!important;padding-bottom:32px!important;}
+  .profile-photo{width:72px!important;height:72px!important;}
+  .profile-row{margin-bottom:16px!important;}
+  .intro-divider{padding-top:14px!important;}
+  .comp-grid{gap:8px!important;}
+  .skill-cols{gap:28px!important;}
 }
 </style>
 <template id="__bundler_thumbnail" data-bg-color="#ffffff">
@@ -255,25 +295,46 @@ const Carousel = ({ images }) => {
 /* ── Nav ─────────────────────────────────────────────────────── */
 const Nav = ({ page, go }) => {
   const [sc, setSc] = useState(false);
-  const { name, title, logo } = window.APP;
+  const [mob, setMob] = useState(false);
+  const { logo } = window.APP;
   useEffect(() => {const h = () => setSc(window.scrollY > 20);window.addEventListener('scroll', h, { passive: true });return () => window.removeEventListener('scroll', h);}, []);
   const items = [{ id: 'about', label: 'About' }, { id: 'career', label: 'Career' }, { id: 'portfolio', label: 'Portfolio' }, { id: 'experience', label: 'Experience' }];
   const active = page === 'detail' ? 'portfolio' : page;
+  const navGo = (id) => { go(id); setMob(false); };
   return (
-    <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100, background: sc ? 'rgba(255,255,255,.97)' : '#fff', backdropFilter: sc ? 'blur(16px)' : 'none', borderBottom: `1px solid ${sc ? BRD : 'transparent'}`, transition: 'border-color .3s, background .3s' }}>
+    <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100, background: 'rgba(255,255,255,.97)', backdropFilter: 'blur(16px)', borderBottom: `1px solid ${sc||mob ? BRD : 'transparent'}`, transition: 'border-color .3s' }}>
       <div className="page-wrap" style={{ height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <button onClick={() => go('about')} style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
+        <button onClick={() => navGo('about')} style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
           {logo ?
           <img src={logo} alt="logo" style={{ height: 32, objectFit: 'contain', display: 'block' }} /> :
           <div style={{ height: 36, width: 80, border: `1px dashed ${BRD}`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><span style={{ fontSize: 8, color: T3, letterSpacing: '.06em' }}>LOGO</span></div>
           }
         </button>
+        {/* Desktop nav */}
         <div className="nav-links" style={{ display: 'flex', gap: 28, alignItems: 'center' }}>
           {items.map((it) => {const on = active === it.id;return (
-              <button key={it.id} onClick={() => go(it.id)} className="text-body-2-500"
+              <button key={it.id} onClick={() => navGo(it.id)} className="text-body-2-500"
               style={{ color: on ? T1 : T3, borderBottom: `2px solid ${on ? ACC : 'transparent'}`, paddingBottom: 3, transition: 'color .15s,border-color .15s' }}
               onMouseEnter={(e) => {if (!on) e.currentTarget.style.color = T2;}} onMouseLeave={(e) => {if (!on) e.currentTarget.style.color = T3;}}>{it.label}</button>);
           })}
+        </div>
+        {/* Hamburger button - SVG icon */}
+        <button className="hamburger" onClick={() => setMob(!mob)} aria-label="메뉴">
+          {mob
+            ? <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><line x1="2" y1="2" x2="16" y2="16" stroke={T1} strokeWidth="1.5" strokeLinecap="round"/><line x1="16" y1="2" x2="2" y2="16" stroke={T1} strokeWidth="1.5" strokeLinecap="round"/></svg>
+            : <svg width="22" height="14" viewBox="0 0 22 14" fill="none"><line x1="0" y1="1" x2="22" y2="1" stroke={T1} strokeWidth="1.5" strokeLinecap="round"/><line x1="0" y1="7" x2="22" y2="7" stroke={T1} strokeWidth="1.5" strokeLinecap="round"/><line x1="0" y1="13" x2="22" y2="13" stroke={T1} strokeWidth="1.5" strokeLinecap="round"/></svg>
+          }
+        </button>
+      </div>
+      {/* Mobile dropdown */}
+      <div style={{ overflow: 'hidden', maxHeight: mob ? 300 : 0, transition: 'max-height .35s ease', background: '#fff', borderTop: mob ? `1px solid ${BRD}` : 'none' }}>
+        <div className="page-wrap" style={{ paddingTop: 8, paddingBottom: 16 }}>
+          {items.map((it) => { const on = active === it.id; return (
+            <button key={it.id} onClick={() => navGo(it.id)}
+              style={{ display: 'block', width: '100%', textAlign: 'left', padding: '14px 0', fontSize: 15, fontWeight: on ? 500 : 400, color: on ? ACC : T2, borderBottom: `1px solid ${BRD}`, transition: 'color .15s' }}>
+              {it.label}
+            </button>
+          ); })}
         </div>
       </div>
     </nav>);
@@ -305,11 +366,11 @@ const AboutPage = ({ go }) => {
 
       {/* ── Hero: Profile ─────────────────────────────────── */}
       <section style={{ background: '#fff', borderBottom: `1px solid ${BRD}` }}>
-        <div className="page-wrap" style={{ padding: '80px 48px' }}>
+        <div className="page-wrap mob-section" style={{ padding: '80px 48px' }}>
           <FadeIn>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 24, marginBottom: 32 }}>
+            <div className="profile-row" style={{ display: 'flex', alignItems: 'center', gap: 24, marginBottom: 32 }}>
               {/* Circle photo — set window.APP.photo to your image URL */}
-              <div style={{ flexShrink: 0, borderRadius: '50%', overflow: 'hidden', border: `2px solid ${BRD}`, background: SURF, display: 'flex', alignItems: 'center', justifyContent: 'center', width: "150px", height: "150px" }}>
+              <div className="profile-photo" style={{ flexShrink: 0, borderRadius: '50%', overflow: 'hidden', border: `2px solid ${BRD}`, background: SURF, display: 'flex', alignItems: 'center', justifyContent: 'center', width: "150px", height: "150px" }}>
                 {photo ?
                 <img src={photo} alt={name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> :
                 <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="12" r="6" stroke="#D0D0CE" strokeWidth="1.5" /><path d="M2 30c0-7.732 6.268-14 14-14s14 6.268 14 14" stroke="#D0D0CE" strokeWidth="1.5" /></svg>
@@ -328,7 +389,7 @@ const AboutPage = ({ go }) => {
                 </div>
               </div>
             </div>
-            <div style={{ borderTop: `1px solid ${BRD}`, paddingTop: 24 }}>
+            <div className="intro-divider" style={{ borderTop: `1px solid ${BRD}`, paddingTop: 24 }}>
               <p className="text-overline" style={{ color: T3, marginBottom: 10 }}>Introduction</p>
               <p className="text-body-1" style={{ color: T2, fontFamily: "\"Noto Sans KR\"", lineHeight: "1.87", fontWeight: "400", width: "100%" }}>{bio}</p>
             </div>
@@ -338,12 +399,12 @@ const AboutPage = ({ go }) => {
 
       {/* ── Core Competency ───────────────────────────────── */}
       <section style={{ background: SURF, borderBottom: `1px solid ${BRD}` }}>
-        <div className="page-wrap" style={{ padding: '72px 48px' }}>
+        <div className="page-wrap mob-section" style={{ padding: '72px 48px' }}>
           <FadeIn>
             <OL color={ACC}>Core Competency</OL>
             <h2 className="text-h5" style={{ color: T1, marginBottom: 28 }}>핵심 역량</h2>
           </FadeIn>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '16px' }} className="grid-3">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '16px' }} className="grid-3 comp-grid">
             {competencies.map((c, i) =>
             <FadeIn key={c.title} delay={i * 50}>
                 <div style={{ background: '#fff', padding: '22px 20px', border: `1px solid ${BRD}`, display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -359,12 +420,12 @@ const AboutPage = ({ go }) => {
 
       {/* ── Key Skills with % bars ────────────────────────── */}
       <section style={{ background: '#fff', borderBottom: `1px solid ${BRD}` }}>
-        <div className="page-wrap" style={{ padding: '72px 48px' }}>
+        <div className="page-wrap mob-section" style={{ padding: '72px 48px' }}>
           <FadeIn>
             <OL color={ACC}>Key Skills</OL>
             <h2 className="text-h5" style={{ color: T1, marginBottom: 28 }}>스킬 & 툴</h2>
           </FadeIn>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '48px 56px' }} className="grid-3">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '48px 56px' }} className="grid-3 skill-cols">
             {keySkills.map(({ category, items }, gi) =>
             <FadeIn key={category} delay={gi * 60}>
                 <div>
@@ -392,18 +453,18 @@ const CareerPage = () => {
   const tog = (id) => setExp((p) => ({ ...p, [id]: !p[id] }));
   return (
     <div style={{ paddingTop: 64 }}>
-      <div className="page-wrap" style={{ padding: '80px 48px' }}>
+      <div className="page-wrap mob-section" style={{ padding: '80px 48px' }}>
         <FadeIn>
           <OL color={ACC}>Career</OL>
           <h1 className="text-h3" style={{ color: T1, marginBottom: 56 }}>Work Timeline</h1>
         </FadeIn>
-        <div style={{ position: 'relative', paddingLeft: 52 }}>
+        <div className="career-timeline" style={{ position: 'relative', paddingLeft: 52 }}>
           <div style={{ position: 'absolute', left: 0, top: 12, bottom: 80, width: 1, background: `linear-gradient(180deg,${BRD} 0%,transparent 100%)` }} />
           {career.map((item, idx) =>
           <FadeIn key={item.id} delay={idx * 70}>
               <div style={{ position: 'relative', marginBottom: 60 }}>
-                <div style={{ position: 'absolute', left: -55, top: 10, width: 10, height: 10, borderRadius: '50%', background: '#fff', border: `2px solid ${ACC}` }} />
-                <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: '32px' }}>
+                <div className="career-dot" style={{ position: 'absolute', left: -55, top: 10, width: 10, height: 10, borderRadius: '50%', background: '#fff', border: `2px solid ${ACC}` }} />
+                <div className="grid-2 career-grid" style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: '32px' }}>
                   <div style={{ paddingTop: 4 }}>
                     <p className="text-body-2-500" style={{ color: ACC, marginBottom: 4 }}>{item.period}</p>
                     <p className="text-mini-upper" style={{ color: T3 }}>{item.category}</p>
@@ -440,7 +501,7 @@ const PortfolioPage = ({ onDetail }) => {
   const needsScroll = portfolio.length > 4;
   return (
     <div style={{ paddingTop: 64 }}>
-      <div className="page-wrap" style={{ padding: '80px 48px' }}>
+      <div className="page-wrap mob-section" style={{ padding: '80px 48px' }}>
         <FadeIn>
           <OL color={ACC}>Portfolio</OL>
           <h1 className="text-h3" style={{ color: T1, marginBottom: 56 }}>Selected Projects</h1>
@@ -603,7 +664,7 @@ const ExperiencePage = () => {
   const needsScroll = career.length > 4;
   return (
     <div style={{ paddingTop: 64 }}>
-      <div className="page-wrap" style={{ padding: '80px 48px' }}>
+      <div className="page-wrap mob-section" style={{ padding: '80px 48px' }}>
         <FadeIn>
           <OL color={ACC}>Experience</OL>
           <h1 className="text-h3" style={{ color: T1, marginBottom: 56 }}>Work History</h1>
@@ -653,12 +714,12 @@ const ContactPage = () => {
   };
   return (
     <div style={{ paddingTop: 64 }}>
-      <div className="page-wrap" style={{ padding: '80px 48px' }}>
+      <div className="page-wrap mob-section" style={{ padding: '80px 48px' }}>
         <FadeIn>
           <OL color={ACC}>Contact</OL>
           <h1 className="text-h3" style={{ color: T1, marginBottom: 56 }}>Get in Touch</h1>
         </FadeIn>
-        <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'start' }}>
+        <div className="grid-2 contact-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'start' }}>
           <FadeIn>
             <p className="text-h5" style={{ color: T2, fontWeight: 300, lineHeight: '32px', maxWidth: 340, marginBottom: 52 }}>새로운 프로젝트나 협업 기회에 대해 언제든지 연락 주세요. 함께 좋은 서비스를 만들어갈 기회를 기다리고 있습니다.</p>
             {[{ l: 'Email', v: email, h: `mailto:${email}` }, { l: 'Phone', v: phone, h: `tel:${phone.replace(/\D/g, '')}` }].map(({ l, v, h }) =>
@@ -728,7 +789,7 @@ const App = () => {
         {renderPage()}
       </main>
       <footer style={{ borderTop: `1px solid ${BRD}`, background: SURF }}>
-        <div className="page-wrap" style={{ padding: '32px 48px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div className="footer-row page-wrap" style={{ padding: '32px 48px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <p className="text-caption" style={{ color: T3 }}>박용준 · {new Date().getFullYear()}</p>
           <p className="text-caption" style={{ color: T3 }}>서비스 UX/UI 기획자 · PM/PO</p>
         </div>
