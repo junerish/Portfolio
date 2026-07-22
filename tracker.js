@@ -1,9 +1,9 @@
 (function(){
   var EP = window.PORTFOLIO_ANALYTICS_ENDPOINT || (function(){
     var s = localStorage.getItem('pf_endpoint');
-    if (s && (s.indexOf('AKfycbxkYqQVIFUj94LvY_L_cfm-SoVL7F2dGuW157ezBzEkrrPnnT8I-BYZLzxdw4ei49Oevg') > -1 || s.indexOf('AKfycbxUQZeTza47oB-GAYb7l7lTqrBEunse0WpW_tTrqplHEGjBe-nAcMPkSvsX4YuoTUob') > -1)) { s = null; localStorage.removeItem('pf_endpoint'); }
+    if (s && (s.indexOf('AKfycbxkYqQVIFUj94LvY_L_cfm-SoVL7F2dGuW157ezBzEkrrPnnT8I-BYZLzxdw4ei49Oevg') > -1 || s.indexOf('AKfycbxUQZeTza47oB-GAYb7l7lTqrBEunse0WpW_tTrqplHEGjBe-nAcMPkSvsX4YuoTUob') > -1 || s.indexOf('AKfycbwhJ_cQs5hDh-FpvmxJd6ZeLk2Bk_U0zpx2wPhGhfNC0V5L45ki5pea6gsKgLr-qor86w') > -1)) { s = null; localStorage.removeItem('pf_endpoint'); }
     return s;
-  })() || 'https://script.google.com/macros/s/AKfycbwhJ_cQs5hDh-FpvmxJd6ZeLk2Bk_U0zpx2wPhGhfNC0V5L45ki5pea6gsKgLr-qor86w/exec';
+  })() || 'https://script.google.com/macros/s/AKfycbwXre2fheqUUTZwlxQsmATEVFRnzq9ZvV0-OzZyjaFBfQgiyqIjIjvFkkhw27zyq5AhHw/exec';
 
   var GW = 20, GH = 12; // mouse heatmap grid resolution
 
