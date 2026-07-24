@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="./support.js"></script>
+<script src="./gate.js"></script>
 </head>
 <body>
 <x-dc>
@@ -598,7 +599,7 @@ class Component extends DCLogic {
     const portfolioProjects = portfolioRaw.map(p => ({
       ...p,
       listSummary: p.overview || '',
-      onOpen: () => { this.setState({ selectedId: p.id, imgIndex: 0, zoomOpen: false }); document.body.style.overflow = ''; window.scrollTo(0, 0); }
+      onOpen: () => { this.setState({ selectedId: p.id, imgIndex: 0, zoomOpen: false }); document.body.style.overflow = ''; window.scrollTo(0, 0); if (window.pfTrack) window.pfTrack('portfolio:' + p.id); }
     }));
 
     const worksAll = [
@@ -768,8 +769,8 @@ class Component extends DCLogic {
       navItems, isIntroduction: isIntro, isCareer, isPortfolio, isWorks,
       showPortfolioList: isPortfolio && !selectedProject,
       showPortfolioDetail: isPortfolio && !!selectedProject,
-      goPrevProject: prevProj ? () => { this.setState({ selectedId: prevProj.id, imgIndex: 0, zoomOpen: false }); window.scrollTo(0, 0); } : null,
-      goNextProject: nextProj ? () => { this.setState({ selectedId: nextProj.id, imgIndex: 0, zoomOpen: false }); window.scrollTo(0, 0); } : null,
+      goPrevProject: prevProj ? () => { this.setState({ selectedId: prevProj.id, imgIndex: 0, zoomOpen: false }); window.scrollTo(0, 0); if (window.pfTrack) window.pfTrack('portfolio:' + prevProj.id); } : null,
+      goNextProject: nextProj ? () => { this.setState({ selectedId: nextProj.id, imgIndex: 0, zoomOpen: false }); window.scrollTo(0, 0); if (window.pfTrack) window.pfTrack('portfolio:' + nextProj.id); } : null,
       hasPrevProject: !!prevProj, hasNextProject: !!nextProj,
       noPrevProject: !prevProj, noNextProject: !nextProj,
       prevCursor: prevProj ? 'pointer' : 'default', nextCursor: nextProj ? 'pointer' : 'default',
