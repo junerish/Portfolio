@@ -1,4 +1,13 @@
 (function(){
+  function sha256hex(str){
+    if (!(window.crypto && crypto.subtle)) return Promise.resolve(null);
+    return crypto.subtle.digest('SHA-256', new TextEncoder().encode(str)).then(function(buf){
+      var a = new Uint8Array(buf), out = '';
+      for (var i = 0; i < a.length; i++) out += ('0' + a[i].toString(16)).slice(-2);
+      return out;
+    });
+  }
+  var PW_SALT = 'pf_portfolio_v1$';
   var EP = window.PORTFOLIO_ANALYTICS_ENDPOINT || (function(){
     var s = localStorage.getItem('pf_endpoint');
     return s || null;
@@ -35,7 +44,10 @@
       var id = idEl.value.trim(), pw = pwEl.value;
       errEl.textContent = '';
       goEl.disabled = true; goEl.textContent = '확인 중…';
-      fetch(EP + '?login=1&id=' + encodeURIComponent(id) + '&pw=' + encodeURIComponent(pw))
+      sha256hex(PW_SALT + pw).then(function(pwh){
+        var q = EP + '?login=1&id=' + encodeURIComponent(id) + (pwh ? '&pwh=' + pwh : '&pw=' + encodeURIComponent(pw));
+        return fetch(q);
+      })
         .then(function(r){ return r.json(); })
         .then(function(j){
           if (j && j.ok){ try{ sessionStorage.setItem('pf_authed','1'); }catch(e){} remove(); }
